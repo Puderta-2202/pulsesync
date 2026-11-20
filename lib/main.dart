@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'features/telemetry/presentation/telemetry_dashboard_screen.dart';
+import 'presentation/main_navigation_screen.dart';
 
 void main() {
   runApp(
@@ -20,7 +19,7 @@ class PulseSyncApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'PulseSync',
       theme: ThemeData.dark(),
-      home: const TelemetryDashboardScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }

@@ -31,7 +31,6 @@ class NetworkSimulatorService {
       case NetworkStatus.unstable:
         await Future.delayed(_responseDelay);
 
-        // Simulasi peluang kegagalan sebesar 50%.
         if (_random.nextBool()) {
           throw const NetworkSimulationException(
             'Simulasi jaringan tidak stabil: request timeout.',

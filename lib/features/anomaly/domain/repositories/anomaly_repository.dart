@@ -8,6 +8,8 @@ abstract class AnomalyRepository {
   /// Mengambil seluruh antrean yang masih pending berdasarkan FIFO.
   Future<List<QueuedAnomaly>> getPendingAnomalies();
 
+  Future<List<QueuedAnomaly>> getAllAnomalies();
+
   /// Memperbarui status sinkronisasi suatu antrean.
   Future<void> updateSyncStatus(int id, String status);
 

@@ -18,26 +18,35 @@ class AnomalyRepositoryImpl implements AnomalyRepository {
     await _localDataSource.insertAnomaly(model.toJson());
   }
 
+  QueuedAnomaly _toQueuedAnomaly(Map<String, Object?> record) {
+    final model = AnomalyModel.fromMap(record);
+
+    return QueuedAnomaly(
+      id: model.id!,
+      anomaly: OdpAnomaly(
+        odpCode: model.odpCode,
+        signalDbm: model.signalDbm,
+        category: model.category,
+        notes: model.notes,
+        createdAt: model.createdAt,
+      ),
+      syncStatus: model.syncStatus,
+      retryCount: model.retryCount,
+    );
+  }
+
   @override
   Future<List<QueuedAnomaly>> getPendingAnomalies() async {
     final records = await _localDataSource.getPendingAnomalies();
 
-    return records.map((record) {
-      final model = AnomalyModel.fromMap(record);
+    return records.map(_toQueuedAnomaly).toList();
+  }
 
-      return QueuedAnomaly(
-        id: model.id!,
-        anomaly: OdpAnomaly(
-          odpCode: model.odpCode,
-          signalDbm: model.signalDbm,
-          category: model.category,
-          notes: model.notes,
-          createdAt: model.createdAt,
-        ),
-        syncStatus: model.syncStatus,
-        retryCount: model.retryCount,
-      );
-    }).toList();
+  @override
+  Future<List<QueuedAnomaly>> getAllAnomalies() async {
+    final records = await _localDataSource.getAllAnomalies();
+
+    return records.map(_toQueuedAnomaly).toList();
   }
 
   @override
