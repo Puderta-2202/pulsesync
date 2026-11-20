@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../features/anomaly/presentation/anomaly_history_screen.dart';
 import '../features/telemetry/presentation/telemetry_dashboard_screen.dart';
+import '../features/telemetry/presentation/providers/telemetry_providers.dart';
 
-class MainNavigationScreen extends StatefulWidget {
+class MainNavigationScreen extends ConsumerStatefulWidget {
   const MainNavigationScreen({super.key});
 
   @override
-  State<MainNavigationScreen> createState() =>
+  ConsumerState<MainNavigationScreen> createState() =>
       _MainNavigationScreenState();
 }
 
-class _MainNavigationScreenState extends State<MainNavigationScreen> {
+class _MainNavigationScreenState
+    extends ConsumerState<MainNavigationScreen> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = [
@@ -32,6 +35,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           setState(() {
             _selectedIndex = index;
           });
+
+          ref.read(telemetryEnabledProvider.notifier).state =
+              index == 0;
         },
         backgroundColor: const Color(0xFF1E293B),
         selectedItemColor: const Color(0xFF38BDF8),
